@@ -38,7 +38,7 @@ jobs:
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
           _targetLabelKey_: _targetLabel_
-          acrName: streamlitcicd
+          acrName: streamlitcicd-dndpeqb2f6aacmcg.azurecr.io
           containerAppName: streamlit-app
           resourceGroup: linuxvm-rg-dev
           imageToBuild: streamlitcicd-dndpeqb2f6aacmcg.azurecr.io/streamlit-app:${{ github.sha }}
