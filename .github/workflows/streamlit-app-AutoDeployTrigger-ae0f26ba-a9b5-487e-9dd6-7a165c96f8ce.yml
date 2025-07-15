@@ -36,9 +36,8 @@ jobs:
         uses: azure/container-apps-deploy-action@v2
         with:
           appSourcePath: ${{ github.workspace }}
-          _dockerfilePathKey_: _dockerfilePath_
-          _targetLabelKey_: _targetLabel_
-          registryUrl: streamlitcicd-dndpeqb2f6aacmcg.azurecr.io
+          acrName: streamlitcicd
+          #registryUrl: streamlitcicd-dndpeqb2f6aacmcg.azurecr.io
           containerAppName: streamlit-app
           resourceGroup: linuxvm-rg-dev
           imageToBuild: streamlitcicd-dndpeqb2f6aacmcg.azurecr.io/streamlit-app:${{ github.sha }}
