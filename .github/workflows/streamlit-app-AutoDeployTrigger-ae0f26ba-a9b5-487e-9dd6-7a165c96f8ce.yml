@@ -1,0 +1,52 @@
+name: Trigger auto deployment for streamlit-app
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/streamlit-app-AutoDeployTrigger-ae0f26ba-a9b5-487e-9dd6-7a165c96f8ce.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    permissions:          # ← required for OIDC
+      id-token: write
+      contents: read
+    
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id:        ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id:        ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      - run: nslookup streamlitcicd-dndpeqb2f6aacmcg.azurecr.io && curl -I https://streamlitcicd-dndpeqb2f6aacmcg.azurecr.io/v2/
+      
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          #acrName: streamlitcicd
+          registryUrl: streamlitcicd-dndpeqb2f6aacmcg.azurecr.io
+          registryUsername: streamlitcicd
+          registryPassword: ${{ secrets.REGISTRY_PASSWORD }} 
+          containerAppName: streamlit-app
+          resourceGroup: linuxvm-rg-dev
+          imageToBuild: streamlitcicd-dndpeqb2f6aacmcg.azurecr.io/streamlit-app:${{ github.sha }}
+          
+            
+
+     
+
