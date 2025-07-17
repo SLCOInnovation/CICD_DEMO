@@ -21,11 +21,17 @@ cities = air_quality_slc["city"].unique()
 
 for city in cities:
     subset = air_quality_slc[air_quality_slc["city"] == city]
-    fig = plt.figure(figsize=(10,6))
+    fig_pm10 = plt.figure(figsize=(10,6))
     sns.lineplot(x='year', y="pm10_concentration", data=subset)
     plt.title(f"Yearly PM 10 Concentration: {city}")
     plt.xlabel("Year")
     plt.ylabel("PM10 Concentration")
-    st.pyplot(fig)
+    st.pyplot(fig_pm10)
 
+    fig_n02 = plt.figure(figsize=(10,6))
+    sns.lineplot(x='year', y="no2_concentration", data=subset)
+    plt.title(f"Yearly NO2 Concentration: {city}")
+    plt.xlabel("Year")
+    plt.ylabel("N02 Concentration")
+    st.pyplot(fig_n02)
     

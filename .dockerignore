@@ -1,3 +1,5 @@
 .venv/
 secret.toml
 .env
+azureSP.json
+notes.txt

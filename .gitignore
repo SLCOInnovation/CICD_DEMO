@@ -14,3 +14,4 @@ wheels/
 .env.*
 secrets.toml
 notes.txt
+azureSP.json
